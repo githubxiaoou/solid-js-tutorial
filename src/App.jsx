@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Product from './pages/Product';
 import { useCartContext } from "./context/CartContext";
+import { resolvePath } from './utils/resolvePath';
 
 function App() {
   const [darkTheme, setDarkTheme] = createSignal(false)
@@ -34,13 +35,13 @@ function App() {
         >light_mode</span>
         <h1 class="mr-auto">Ninja Merch</h1>
 
-        <A href="/">Home</A>
-        <A href="/cart">Cart ({quantity()})</A>
+        <A href={resolvePath('/')}>Home</A>
+        <A href={resolvePath('/cart')}>Cart ({quantity()})</A>
       </header>
       
       <img class="rounded-md" src={banner} alt="site banner" />
 
-      <Routes>
+      <Routes base='/solid-js-tutorial'>
         <Route path="/" component={Home} />
         <Route path="/cart" component={Cart} />
         <Route path="/product/:id" component={Product} />

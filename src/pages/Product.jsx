@@ -3,9 +3,18 @@ import { createResource, createSignal } from "solid-js"
 import { useCartContext } from "../context/CartContext"
 
 const fetchProduct = async (id) => {
-  const res = await fetch('http://localhost:4000/products/' + id)
+    let url
 
-  return res.json()
+  if (import.meta.env.DEV) {
+    url = `http://localhost:4000/products/${id}`
+  } else {
+    url = import.meta.env.BASE_URL + `/data/db.json`
+  }
+
+  const res = await fetch(url)
+  const data = await res.json()
+
+  return import.meta.env.DEV ? data : data.products.find((p) => p.id == Number(id))
 }
 
 export default function Product() {
